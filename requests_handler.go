@@ -73,15 +73,15 @@ func getUserHandler(c echo.Context, db *sql.DB) error {
 	userID, ok := sess.Values["id"].(int64)
 
 	if !ok {
-		// Если id пользователя отсутствует в сессии, вернуть ошибку
-		return c.String(http.StatusUnauthorized, "Вы не авторизованы")
+		// Если id пользователя отсутствует в сессии, вернуть User с id = -1
+		return c.JSON(http.StatusOK, nil)
 	}
 
 	// Используйте userID для получения данных о пользователе из базы данных
 	user, err := getUserInDB(db, userID)
 	if err != nil {
-		// Если произошла ошибка при запросе данных из базы данных, вернуть ошибку
-		return c.String(http.StatusInternalServerError, "Ошибка при получении данных пользователя")
+		// Если произошла ошибка при запросе данных из базы данных, вернуть пустую структуру
+		return c.JSON(http.StatusOK, user)
 	}
 
 	return c.JSON(http.StatusOK, user)

@@ -24,14 +24,8 @@ import { RouterLink, RouterView } from 'vue-router'
 					</a>
 				</div>
 				-->
-				<div v-if="isAuth === false" class="d-flex align-items-center ms-auto">
-					<button class="btn btn-primary">
-						<router-link class="nav-link" to="/register"> <i class="bi bi-person-plus"></i> Войти
-						</router-link>
-					</button>
-				</div>
-
-				<button v-else class="btn btn-primary ms-auto bi bi-door-closed" @click="logout"> {{ this.name }}</button>
+				<button v-if="isAuth === true" class="btn btn-primary ms-auto bi bi-door-closed" @click="logout"> {{
+					this.name }}</button>
 			</div>
 		</nav>
 	</header>
@@ -81,11 +75,11 @@ export default {
 				*/
 				const data = await response.json();
 
-				if (data.Id != -1) {
-					this.isAuth = true
-					this.name = data.firstName
+				if (data === null || data.Id === -1) {
+					return;
 				}
-
+				this.isAuth = true
+				this.name = data.firstName
 
 			} catch (error) {
 				alert(error)
@@ -101,14 +95,12 @@ export default {
 					});
 
 					if (!response.ok) {
-						this.isAuth = false;
-						this.name = null;
-
-						window.location.reload();
+						new Error("!!!")
 					}
+					this.isAuth = false;
+					this.name = null;
 
-					alert(response.text)
-
+					window.location.reload();
 				} catch (error) {
 					alert("Ошибка выхода из аккаунта", error);
 				}
