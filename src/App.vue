@@ -7,7 +7,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 </script>
-
 <template>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,8 +23,9 @@ import { RouterLink, RouterView } from 'vue-router'
 					</a>
 				</div>
 				-->
-				<button v-if="isAuth === true" class="btn btn-primary ms-auto bi bi-door-closed" @click="logout"> {{
-					this.name }}</button>
+				<div v-if="isAuth === true">
+					<button class="btn btn-primary ms-auto bi bi-door-closed" @click="logout"> {{ this.name }}</button>
+				</div>
 			</div>
 		</nav>
 	</header>
@@ -36,8 +36,6 @@ import { RouterLink, RouterView } from 'vue-router'
 		{{ this.name }}
 	</footer>
 </template>
-
-
 <script>
 export default {
 	data() {
@@ -80,7 +78,6 @@ export default {
 				}
 				this.isAuth = true
 				this.name = data.firstName
-
 			} catch (error) {
 				alert(error)
 			}
@@ -100,7 +97,7 @@ export default {
 					this.isAuth = false;
 					this.name = null;
 
-					window.location.reload();
+					window.location.href = '/';
 				} catch (error) {
 					alert("Ошибка выхода из аккаунта", error);
 				}

@@ -45,8 +45,10 @@ export default {
 					const errorText = await response.text();
 					throw new Error(errorText);
 				}
-				alert('ok');
-				//window.location.href = '/';
+				const lol = await response.text()
+				alert(lol)
+
+				window.location.href = '/';
 			} catch (error) {
 				alert(error);
 

@@ -44,6 +44,10 @@ func main() {
 		return registerUserHandler(c, db)
 	})
 
+	e.POST("/login_user", func(c echo.Context) error {
+		return loginUserHandler(c, db)
+	})
+
 	e.GET("/get_user", func(c echo.Context) error {
 		return getUserHandler(c, db)
 	})

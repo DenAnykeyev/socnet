@@ -57,12 +57,11 @@ func loginUserHandler(c echo.Context, db *sql.DB) error {
 	}
 
 	sess, _ := session.Get("session", c)
-
 	sess.Values["id"] = dbUser.Id
 
 	sess.Save(c.Request(), c.Response())
 
-	return c.String(http.StatusOK, "Вход выполнен успешно")
+	return c.String(http.StatusOK, "Вход в аккаунт выполнен успешно")
 }
 
 // Метод обработки запроса на получение данных о пользователе
@@ -70,7 +69,7 @@ func loginUserHandler(c echo.Context, db *sql.DB) error {
 func getUserHandler(c echo.Context, db *sql.DB) error {
 	// Получить сессию
 	sess, _ := session.Get("session", c)
-	userID, ok := sess.Values["id"].(int64)
+	userID, ok := sess.Values["id"].(int)
 
 	if !ok {
 		// Если id пользователя отсутствует в сессии, вернуть User с id = -1

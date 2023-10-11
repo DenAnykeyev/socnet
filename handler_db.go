@@ -55,7 +55,7 @@ func loginUserFromDB(db *sql.DB, numberPhone, password string) (*User, error) {
 
 // Метод для получения записи пользователя по его
 // id записи в хеше сессии
-func getUserInDB(db *sql.DB, userID int64) (*User, error) {
+func getUserInDB(db *sql.DB, userID int) (*User, error) {
 	var user User
 	err := db.QueryRow("SELECT id, firstName, lastName, numberPhone, rules FROM users WHERE id=?", userID).Scan(&user.Id, &user.FirstName, &user.LastName, &user.NumberPhone, &user.Rules)
 

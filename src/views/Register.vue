@@ -69,8 +69,8 @@ export default {
 				alert(lol)
 				return;
 			}
-
-			alert(this.firstName + ", Вы были успешно зарегистрированы!")
+			const lol = await response.text()
+			alert(this.firstName + " " + lol)
 
 			window.location.href = '/';
 		},

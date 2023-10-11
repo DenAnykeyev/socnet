@@ -7,47 +7,63 @@
 </script>
 
 <template>
-	<div><button class="btn btn-primary" @click="testGet">Тест GET запроса</button></div>
-	<div><button class="btn btn-primary" @click="testPost">Тест POST запроса</button></div>
-	<h1>Это моя компания</h1>
-	<p>Добро пожаловать!<br>Мы занимаемся тем, что создаем сайты, делаем это хорошо и качественно. Далее мы научимся
-		создавать и полноценные веб-приложения!</p>
-	<img src="/assets/img/main.jpg" class="img-fluid">
+	<div v-if="isAuth === true">
+		<!--
+			Перекидываем на /chats
+		-->
+		<h1 class="text-center">Авторизирован</h1>
+	</div>
+	<div v-else>
+		<!--
+			Перекидываем в /register||login
+		-->
+		<h1 class="text-center">Не авторизирован</h1>
+	</div>
 </template>
 
 <script>
 export default {
 	data() {
 		return {
+			isAuth: false
 		}
 	},
+	mounted() {
+		this.checkAuth();
+	},
 	methods: {
-		async testPost() {
-			// Отправляем запрос типа POST
-			const response = await fetch('/testpost', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					name: "Иван"
-				})
-			});
+		async checkAuth() {
+			try {
+				const response = await fetch(`/get_user`, {
+					method: 'GET',
+				});
 
-			const jsonResult = await response.json();
+				if (!response.ok) {
+					throw new Error('Не удалось получить данные о авторизации');
+				}
+				/*
+					JSON ответ с backend сервера
 
-			console.log(jsonResult);
+					Должен содержать вид:
+					{ 
+						"id": 1, "firstName": "ДенисПупка", 
+						"lastName": "ДенисПупкаЛупкаПупуп", 
+						"numberPhone": "89963247891", 
+						"password": "", 
+						"rules": "user"
+					  }
+				*/
+				const data = await response.json();
+
+				if (data === null || data.Id === -1) {
+					return;
+				}
+				this.isAuth = true
+				this.name = data.firstName
+			} catch (error) {
+				alert(error)
+			}
 		},
-		async testGet() {
-			// Отправляем запрос типа GET
-			const response = await fetch(`/testget?name=Василий`, {
-				method: 'GET'
-			});
-
-			const textResult = await response.text();
-
-			console.log(textResult);
-		}
 	}
 }
 </script>
