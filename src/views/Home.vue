@@ -11,13 +11,20 @@
 		<!--
 			Перекидываем на /chats
 		-->
-		<h1 class="text-center">Авторизирован</h1>
+		<div class="text-center">
+			<h1>Авторизирован</h1>
+			<button class="btn btn-primary ms-auto" @click="redirectToChats"> Перейти к чатам</button>
+		</div>
 	</div>
 	<div v-else>
 		<!--
 			Перекидываем в /register||login
 		-->
-		<h1 class="text-center">Не авторизирован</h1>
+		<div class="text-center">
+			<h1>Не авторизирован</h1>
+			<button class="btn btn-primary ms-auto" @click="redirectToRegister"> Перейти к регистрации</button>
+			<button class="btn btn-primary ms-auto" @click="redirectToLogin"> Перейти к авторизации</button>
+		</div>
 	</div>
 </template>
 
@@ -64,6 +71,17 @@ export default {
 				alert(error)
 			}
 		},
+		redirectToRegister() {
+			window.location.href = '/register';
+
+		},
+		redirectToLogin() {
+			window.location.href = '/login';
+
+		},
+		redirectToChats() {
+			window.location.href = '/chats';
+		}
 	}
 }
 </script>

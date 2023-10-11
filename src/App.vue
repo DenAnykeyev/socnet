@@ -33,7 +33,6 @@ import { RouterLink, RouterView } from 'vue-router'
 		<RouterView />
 	</main>
 	<footer>
-		{{ this.name }}
 	</footer>
 </template>
 <script>
